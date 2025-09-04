@@ -6,9 +6,7 @@
 ---
 
 ## 1. 目标与范围
-- **目标**：在皮肤问题子域上验证 LoRA/QLoRA 对小数据集的有效性与稳定性，确保安全与合规。
-- **不在范围**：数据抓取/收集工作；本计划默认数据已可用，仅涉及筛选与处理流程。
-- **输出物**：可复现实验仓库、指标与日志、最佳 ckpt、报告与模型卡/数据卡、评测脚本与配置。
+- **目标**：在皮肤问题子域上验证 LoRA/QLoRA 对小数据集的有效性与稳定性。
 
 ---
 
@@ -17,15 +15,10 @@
 - **数据集A**: [Chinese Medical Dialogue (Surgical)](https://github.com/Toyhom/Chinese-medical-dialogue-data) 具体CSV：[外科5-14000.csv](https://github.com/Toyhom/Chinese-medical-dialogue-data/blob/master/Data_%E6%95%B0%E6%8D%AE/Surgical_%E5%A4%96%E7%A7%91/%E5%A4%96%E7%A7%915-14000.csv)
 - **数据集B**: [Tianchi: 中文医疗对话数据集（ID:90202）](https://tianchi.aliyun.com/dataset/90202)
 
-### 纳入标准（皮肤问题）
-- 保留与皮肤相关的对话/问答（皮疹、痤疮、湿疹、色斑、瘙痒、过敏、皮肤护理等）。
-- 去除个人可识别信息（PII）或诊断/处方类高风险样本。
-- 聚焦 **科普/生活方式/流程指导**。
-
 ### 数据清洗与划分
 - 统一 JSONL Schema：`{id, input, meta, output}`，保证 `key_facts` 可用。
 - 去重、修正常见噪声、长度裁剪（源/目标最大长度）。
-- 按 **70/10/20（train/dev/test）** 划分。
+- 按 **80/20** 划分。
 
 ---
 
@@ -37,7 +30,6 @@
 - **CharF1**：以字符为基本单元计算 P/R/F1。
 - **BERTScore**：中文语义相似度，报告 Precision/Recall/F1。
 - **GPT-as-a-Judge**：事实性/有用性/覆盖度/清晰度/安全性（1-5 分），采用成对比较。
-- **安全评测**：拒答该拒答、自动附加免责声明、越权惩罚。
 
 ### 显著性检验
 - Bootstrap (n ≥ 1000) 计算 95% CI。
